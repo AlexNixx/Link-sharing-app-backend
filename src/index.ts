@@ -18,7 +18,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
+    app.use(morgan('dev'));
 }
 
 app.use(express.json());
@@ -34,15 +34,15 @@ app.use('/api', router);
 app.use(errorMiddleware);
 
 const start = async () => {
-  try {
-    await mongoose.connect(process.env.DB_URL!);
-    console.log('Mongo Connected!');
-    app.listen(process.env.PORT || 5000, () => console.log(`Server work on port: ${process.env.PORT}`));
-  } catch (error) {
-    console.log(error);
-  }
+    try {
+        await mongoose.connect(process.env.DB_URL!);
+        console.log('Mongo Connected!');
+        app.listen(process.env.PORT || 5000, () => console.log(`Server work on port: ${process.env.PORT}`));
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 start().then(() => {
-  console.log('Server started successfully');
+    console.log('Server started successfully');
 });

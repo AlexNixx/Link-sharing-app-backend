@@ -1,9 +1,11 @@
 import { Router } from 'express';
+import { userController } from '../controller/user-controller.js';
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  res.send('Router work');
-});
+router.post('/sign-up', userController.singUp);
+router.post('/sign-in', userController.singIn);
+router.post('/logout', userController.logout);
+router.get('/refresh-tokens', userController.refresh);
 
 export default router;
