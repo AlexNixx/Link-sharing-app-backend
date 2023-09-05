@@ -15,6 +15,10 @@ class TokenService {
         return { accessToken, refreshToken };
     }
 
+    validateAccessToken(token: string) {
+        return jwt.verify(token, process.env.JWT_ACCESS_SECRET!);
+    }
+
     validateRefreshToken(token: string) {
         return jwt.verify(token, process.env.JWT_REFRESH_SECRET!);
     }

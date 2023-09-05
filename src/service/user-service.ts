@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import * as uuid from 'uuid';
 import { JwtPayload } from 'jsonwebtoken';
 
 import UserModel from '../model/user-model/user-model.js';
@@ -7,6 +8,11 @@ import { tokenService } from './token-service.js';
 import { UserDto } from '../dto/user-dto.js';
 
 import { ApiError } from '../exceptions/api-error.js';
+
+import { Types } from 'mongoose';
+import { UploadedFile } from 'express-fileupload';
+import path from 'path';
+import { __dirname } from '../index.js';
 
 export interface SignUpPayload {
     username: string;
@@ -20,7 +26,7 @@ export interface SignInPayload {
 }
 
 class UserService {
-    async singUp({ username, email, password }: SignUpPayload) {
+    async singUp({ email, password }: SignUpPayload) {
         const isExist = await UserModel.findOne({ email });
         if (isExist) {
             throw ApiError.BadRequest(`user with email ${email} already exists`);
@@ -28,7 +34,6 @@ class UserService {
         const hashPassword = await bcrypt.hash(password, 10);
 
         const user = await UserModel.create({
-            username,
             email,
             password: hashPassword,
         });
@@ -98,6 +103,38 @@ class UserService {
             ...tokens,
             user: userDto,
         };
+    }
+
+    async updateProfile(
+        userId: Types.ObjectId | undefined,
+        fields: { name?: string; surname?: string; email?: string },
+        photo?: UploadedFile,
+    ) {
+        if (!userId) {
+            throw ApiError.UnauthorizedError();
+        }
+
+        const user = await UserModel.findById(userId);
+        if (!user) {
+            throw ApiError.UnauthorizedError();
+        }
+
+        let photoName;
+        if (photo) {
+            photoName = uuid.v4() + '.jpg';
+            await photo.mv(path.resolve(__dirname, '..', 'src', 'static', photoName));
+        }
+
+        await UserModel.findByIdAndUpdate(
+            userId,
+            { ...fields, photo: photoName },
+            {
+                new: true,
+                runValidators: true,
+            },
+        );
+
+        return 'The user data has been successfully updated';
     }
 }
 
