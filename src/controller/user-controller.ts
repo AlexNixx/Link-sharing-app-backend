@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { SignInPayload, SignUpPayload, userService } from '../service/user-service.js';
+import { UploadedFile } from 'express-fileupload';
+import { RequestWithUser } from '../middlewares/auth-middleware.js';
 
 class UserController {
     async singUp(req: Request<SignUpPayload>, res: Response, next: NextFunction) {
@@ -52,6 +54,20 @@ class UserController {
             });
 
             return res.json(user);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async updateProfile(req: RequestWithUser, res: Response, next: NextFunction) {
+        try {
+            const userId = req.user?.id;
+            const field = req.body;
+            const photo = req.files?.photo as UploadedFile;
+
+            const message = await userService.updateProfile(userId, field, photo);
+
+            return res.status(200).json(message);
         } catch (error) {
             next(error);
         }

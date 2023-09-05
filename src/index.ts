@@ -15,7 +15,7 @@ dotenv.config();
 const app = express();
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+export const __dirname = path.dirname(__filename);
 
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
@@ -26,7 +26,8 @@ app.use(cookieParser());
 
 app.use(cors({ credentials: true, origin: `${process.env.CLIENT_URL}` }));
 
-app.use(express.static(path.resolve(__dirname, '/build', 'static')));
+app.use(express.static(path.resolve(__dirname, 'static')));
+
 app.use(fileUpload({}));
 
 app.use('/api', router);
