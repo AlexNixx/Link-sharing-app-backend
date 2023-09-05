@@ -1769,7 +1769,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:^8.0.3":
+"husky@npm:^8.0.0":
   version: 8.0.3
   resolution: "husky@npm:8.0.3"
   bin:
@@ -2059,11 +2059,12 @@ __metadata:
     eslint: ^8.48.0
     express: ^4.18.2
     express-fileupload: ^1.4.0
-    husky: ^8.0.3
+    husky: ^8.0.0
     jsonwebtoken: ^9.0.2
     mongoose: ^7.5.0
     morgan: ^1.10.0
     nodemon: ^3.0.1
+    pinst: ^3.0.0
     prettier: ^3.0.3
     rimraf: ^5.0.1
     typescript: ^5.2.2
@@ -2782,6 +2783,15 @@ __metadata:
   version: 2.3.1
   resolution: "picomatch@npm:2.3.1"
   checksum: 050c865ce81119c4822c45d3c84f1ced46f93a0126febae20737bd05ca20589c564d6e9226977df859ed5e03dc73f02584a2b0faad36e896936238238b0446cf
+  languageName: node
+  linkType: hard
+
+"pinst@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "pinst@npm:3.0.0"
+  bin:
+    pinst: bin.js
+  checksum: 4ae48a6a60f79c37071233af51b4d91bfc85cfa3c12b66ccda60cdb642b4d14a4ab0cb3587afc55b1f6192cea1772a5e4822026a0d0d3528296edef00cc2d61f
   languageName: node
   linkType: hard
 

@@ -4,17 +4,15 @@
     "description": "",
     "main": "index.js",
     "type": "module",
-    "husky": {
-        "hooks": {
-            "pre-commit": "yarn lint"
-        }
-    },
     "scripts": {
         "dev": "npx nodemon",
         "build": "rimraf ./build && npx tsc",
         "start": "yarn build && node build/index.js",
         "lint": "npx eslint ./src",
-        "format": "npx eslint ./src --fix && prettier --write ."
+        "format": "npx eslint ./src --fix && prettier --write .",
+        "postinstall": "husky install",
+        "prepack": "pinst --disable",
+        "postpack": "pinst --enable"
     },
     "keywords": [],
     "author": "",
@@ -45,9 +43,10 @@
         "@typescript-eslint/parser": "^6.5.0",
         "concurrently": "^8.2.1",
         "eslint": "^8.48.0",
-        "husky": "^8.0.3",
+        "husky": "^8.0.0",
         "morgan": "^1.10.0",
         "nodemon": "^3.0.1",
+        "pinst": "^3.0.0",
         "prettier": "^3.0.3",
         "rimraf": "^5.0.1",
         "typescript": "^5.2.2"
